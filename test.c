@@ -6,7 +6,7 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 10:48:59 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/27 16:51:47 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:02:15 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,42 @@
 #include<unistd.h>
 #include<limits.h>
 
-void	ft_putchar(char c, int fd)
+void	ft_putchar(char c)
 {
-	write(fd, &c, 1);
+	write(1, &c, 1);
 }
 
-void	ft_putstr(char *s, int fd)
+void	ft_putstr(char *s)
 {
-	if (fd < 0 || !s)
+	if (!s)
 		return ;
 	while (*s != '\0')
 	{
-		ft_putchar(*s, fd);
+		ft_putchar(*s);
 		s++;
 	}
 }
 
-void	ft_putnbr(int n, int fd)
+void	ft_putnbr(int n)
 {
 	if (n == INT_MIN)
 	{
-		ft_putchar('-', fd);
-		ft_putchar('2', fd);
+		ft_putchar('-');
+		ft_putchar('2');
 		n = 147483648;
 	}
 	if (n < 0)
 	{
-		ft_putchar('-', fd);
+		ft_putchar('-');
 		n = -n;
 	}
 	if (n >= 10)
 	{
-		ft_putnbr(n / 10, fd);
-		ft_putnbr(n % 10, fd);
+		ft_putnbr(n / 10);
+		ft_putnbr(n % 10);
 	}
 	else
-		ft_putchar(n + '0', fd);
+		ft_putchar(n + '0');
 }
 
 void	print_num(int *fmt, ...)
@@ -124,29 +124,6 @@ void	print_c(char *c, ...)
 	va_end(ap);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int	check_conv(const char c)
 {
 	if (c == 'c')
@@ -159,40 +136,15 @@ int	check_conv(const char c)
 		putstring
 }
 
-
-
-
-
-
-
-
-
-
 int	ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	int		number;
 
 	va_start(ap, format);
-	if (format == NULL)
-		number = -1;
-	while (0 >= number && *format)
-	{
-
-		if (*format != '%')
-			write(1, format, 1);
-		else
-			
-			check(*(format + 1));
-		format++;
-	}
+	number =
 	va_end(ap);
 	return (number);
 }
 
 
-int	main(void)
-{
-	ft_printf("\0");
-	return (0);
-}

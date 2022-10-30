@@ -6,21 +6,12 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:25:56 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/28 17:41:46 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/10/30 15:45:04 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"libft.h"
 #include<stdio.h>
-
-typedef struct s_args
-{
-	int	c;
-	int	width;
-	int	has_width;
-	int	precision;
-	int	has_precision;
-}	t_args;
 
 int	ft_putchar(char c)
 {
@@ -58,7 +49,7 @@ int	ft_putstr(char *s)
 	int	count;
 
 	if (!s)
-		return ;
+		return (0);
 	count = 0;
 	while (*s != '\0')
 	{
@@ -69,11 +60,58 @@ int	ft_putstr(char *s)
 	return (count);
 }
 
+int	ft_putnbr_big_sixteen(int unsigned x)
+{
+	unsigned int	r;
+	int				count;
+
+	count = 0;
+	r = x % 16;
+	x = x / 16;
+	if (x > 0)
+		ft_putnbr_big_sixteen(x);
+	if (r >= 0 && r <= 9)
+		count += ft_putchar((char)r + '0');
+	else if (r > 9)
+		count += ft_putchar('A' +(char)r - 10);
+	return (count);
+}
+
+int	ft_putnbr_small_sixteen(unsigned int x)
+{
+	unsigned int	r;
+	int				count;
+
+	count = 0;
+	r = x % 16;
+	x = x / 16;
+	if (x > 0)
+		ft_putnbr_small_sixteen(x);
+	if (r >= 0 && r <= 9)
+		ft_putchar((char)r + '0');
+	else if (r > 9)
+		ft_putchar('a' +(char)r - 10);
+	return (count);
+}
+
+int	ft_putadres(unsigned int	a)
+{
+	int				count;
+	unsigned int	adres;
+
+	count = 0;
+	adres = (unsigned int)&a;
+	count += write(1, "0x", 2);
+	count += ft_putnbr_small_sixteen(adres);
+	return (count);
+}
+
 int	ft_vfprintf(const char *format, va_list ap, int done) // put_straeg;
 {
-	int		num;
-	char	*s2;
-	char	centens;
+	int				num;
+	char			*s2;
+	char			centens;
+	unsigned int	num2;
 
 	while (*format != '\0')
 	{
@@ -97,14 +135,34 @@ int	ft_vfprintf(const char *format, va_list ap, int done) // put_straeg;
 			centens = (char)va_arg(ap, int);
 			ft_putchar(centens);
 		}
+		else if (*(format + 1) == 'x' || *(format + 1) == 'x')
+		{
+			format++;
+			if (*format == 'x')
+			{
+				num2 = (unsigned int)va_arg(ap, unsigned int);
+				ft_putnbr_small_sixteen(num2);
+			}
+			else
+			{
+				num2 = (int)va_arg(ap, unsigned int);
+				ft_putnbr_big_sixteen(num2);
+			}
+		}
 		else if (*(format + 1) == '%')
 		{
 			format++;
 			ft_putchar('%');
 		}
+		else if (*(format + 1) == 'p')
+		{
+			format++;
+			num2 = va_arg(ap, unsigned int);
+			ft_putadres(num2);
+		}
 		format++;
-		return (done);
 	}
+	return (done);
 }
 
 int	ft_printf(const char *format, ...)
@@ -114,22 +172,24 @@ int	ft_printf(const char *format, ...)
 	char	*string;
 
 	count = 0;
-	string = *format;
 	va_start(ap, format);
-	read_string;
-	put_strarg;
+	ft_vfprintf(format, ap, count);
 	va_end(ap);
 	return (count);
 }
 
 int	main(void)
 {
-	ft_printf("abcde%c\n", 'F');
-	ft_printf("abcde%c\n", 'W');
-	ft_printf("a%cc%ce%%\n", 'B', 'D', 'a');
+	int	i;
+	int	*p;
+	p = &i;
+	char	*q;
+	// ft_printf("abcde%p\n", i);
+	// ft_printf("abcde%c\n", 'W');
+	// ft_printf("a%cc%ce%%\n", 'B', 'D', 'a');
 	printf("---------ft_printf---------\n");
-	ft_printf("aiueo: %s\n12345: %d\nA : %c\n %%\n", "aiueo", 12345, 'A');
+	ft_printf("%p\n", p);
 	printf("----------printf-----------\n");
-	printf("aiueo: %s\n12345: %d\nA : %c\n %%\n", "aiueo", 12345, 'A');
+	printf("%p\n", p);
 	return (0);
 }

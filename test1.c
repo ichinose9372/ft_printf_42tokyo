@@ -6,7 +6,7 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:25:56 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/31 15:17:12 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:07:01 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,18 +130,15 @@ int	ft_vfprintf(const char *format, va_list ap, int done)
 		{
 			format++;
 			if (*format == 's')
-				ft_putstr(va_arg(ap, char *));
+				done += ft_putstr(va_arg(ap, char *));
 			else if (*format == 'd' || *format == 'i')
 				ft_putnbr(va_arg(ap, int));
 			else if (*format == 'c')
 				ft_putchar(va_arg(ap, int));
-			else if (*format == 'x' || *format == 'X')
-			{
-				if (*format == 'x')
-					ft_putnbr_small_sixteen(va_arg(ap, uintptr_t));
-				else
+			else if (*format == 'x')
+				ft_putnbr_small_sixteen(va_arg(ap, uintptr_t));
+			else if (*format == 'X')
 					ft_putnbr_big_sixteen(va_arg(ap, uintptr_t));
-			}
 			else if (*format == 'p')
 				ft_putadrs(va_arg(ap, uintptr_t));
 			else if (*format == 'u')

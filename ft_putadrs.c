@@ -6,13 +6,13 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:41:17 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/31 14:41:49 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:35:06 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"ft_printf.h"
 
-int	ft_putadres(uintptr_t a)
+int	ft_putadrs(uintptr_t a)
 {
 	int	count;
 

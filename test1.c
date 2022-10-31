@@ -6,7 +6,7 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:25:56 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/30 15:45:04 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/10/31 14:08:57 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,17 @@ int	ft_putstr(char *s)
 	int	count;
 
 	if (!s)
-		return (0);
+		return (write(1, "(null)", 6));
 	count = 0;
-	while (*s != '\0')
+	while (*s || s)
 	{
 		count += ft_putchar(*s);
 		s++;
 	}
-	ft_putchar('\0');
 	return (count);
 }
 
-int	ft_putnbr_big_sixteen(int unsigned x)
+int	ft_putnbr_big_sixteen(uintptr_t x)
 {
 	unsigned int	r;
 	int				count;
@@ -77,7 +76,7 @@ int	ft_putnbr_big_sixteen(int unsigned x)
 	return (count);
 }
 
-int	ft_putnbr_small_sixteen(unsigned int x)
+int	ft_putnbr_small_sixteen(uintptr_t x)
 {
 	unsigned int	r;
 	int				count;
@@ -94,24 +93,40 @@ int	ft_putnbr_small_sixteen(unsigned int x)
 	return (count);
 }
 
-int	ft_putadres(unsigned int	a)
+int	ft_putadres(uintptr_t a)
 {
-	int				count;
-	unsigned int	adres;
+	int	count;
 
 	count = 0;
-	adres = (unsigned int)&a;
 	count += write(1, "0x", 2);
-	count += ft_putnbr_small_sixteen(adres);
+	count += ft_putnbr_small_sixteen(a);
 	return (count);
 }
 
-int	ft_vfprintf(const char *format, va_list ap, int done) // put_straeg;
+int	ft_put_u_nbr(unsigned int n)
+{
+	int	count;
+
+	count = 0;
+	if (n < 0)
+		ft_put_u_nbr(UINT_MAX);
+	if (n >= 10)
+	{
+		ft_put_u_nbr(n / 10);
+		ft_put_u_nbr(n % 10);
+	}
+	else
+		count += ft_putchar(n + '0');
+	return (count);
+}
+
+int	ft_vfprintf(const char *format, va_list ap, int done)
 {
 	int				num;
 	char			*s2;
 	char			centens;
 	unsigned int	num2;
+	uintptr_t		j;
 
 	while (*format != '\0')
 	{
@@ -123,7 +138,7 @@ int	ft_vfprintf(const char *format, va_list ap, int done) // put_straeg;
 			s2 = (char *)va_arg(ap, char *);
 			ft_putstr(s2);
 		}
-		else if (*(format + 1) == 'd')
+		else if (*(format + 1) == 'd' || *(format + 1) == 'i')
 		{
 			format++;
 			num = (int)va_arg(ap, int);
@@ -135,30 +150,36 @@ int	ft_vfprintf(const char *format, va_list ap, int done) // put_straeg;
 			centens = (char)va_arg(ap, int);
 			ft_putchar(centens);
 		}
-		else if (*(format + 1) == 'x' || *(format + 1) == 'x')
+		else if (*(format + 1) == 'x' || *(format + 1) == 'X')
 		{
 			format++;
 			if (*format == 'x')
 			{
-				num2 = (unsigned int)va_arg(ap, unsigned int);
+				j = va_arg(ap, uintptr_t);
 				ft_putnbr_small_sixteen(num2);
 			}
 			else
 			{
-				num2 = (int)va_arg(ap, unsigned int);
+				j = va_arg(ap, uintptr_t);
 				ft_putnbr_big_sixteen(num2);
 			}
+		}
+		else if (*(format + 1) == 'p')
+		{
+			format++;
+			j = va_arg(ap, uintptr_t);
+			ft_putadres(j);
+		}
+		else if (*(format + 1) == 'u')
+		{
+			format++;
+			num2 = va_arg(ap, unsigned int);
+			ft_put_u_nbr(num2);
 		}
 		else if (*(format + 1) == '%')
 		{
 			format++;
 			ft_putchar('%');
-		}
-		else if (*(format + 1) == 'p')
-		{
-			format++;
-			num2 = va_arg(ap, unsigned int);
-			ft_putadres(num2);
 		}
 		format++;
 	}
@@ -180,16 +201,27 @@ int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-	int	i;
-	int	*p;
-	p = &i;
-	char	*q;
-	// ft_printf("abcde%p\n", i);
-	// ft_printf("abcde%c\n", 'W');
-	// ft_printf("a%cc%ce%%\n", 'B', 'D', 'a');
-	printf("---------ft_printf---------\n");
-	ft_printf("%p\n", p);
-	printf("----------printf-----------\n");
-	printf("%p\n", p);
+	// char	s1[5] = {"abcde"};
+
+	ft_put_u_nbr(-21);
+	printf("\n");
+	ft_put_u_nbr(0);
+	printf("\n");
+	ft_put_u_nbr(21);
+	printf("\n");
+	printf("%u\n", -21);
+	printf("%u\n", 4294967295);
+	// printf("---------ft_printf---------\n");
+	// ft_printf("%p\n", &s1[0]);
+	// ft_printf("%p\n", &s1[1]);
+	// ft_printf("%p\n", &s1[2]);
+	// ft_printf("%p\n", &s1[3]);
+	// ft_printf("%p\n", &s1[4]);
+	// printf("----------printf-----------\n");
+	// printf("%p\n", &s1[0]);
+	// printf("%p\n", &s1[1]);
+	// printf("%p\n", &s1[2]);
+	// printf("%p\n", &s1[3]);
+	// printf("%p\n", &s1[4]);
 	return (0);
 }

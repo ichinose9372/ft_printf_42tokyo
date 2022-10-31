@@ -6,7 +6,7 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:25:56 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/31 14:08:57 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:17:12 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ int	ft_putstr(char *s)
 {
 	int	count;
 
-	if (!s)
-		return (write(1, "(null)", 6));
+	if (s ==  NULL)
+		ft_putstr("(NULL)");
 	count = 0;
-	while (*s || s)
+	while (*s && s)
 	{
 		count += ft_putchar(*s);
 		s++;
@@ -93,7 +93,7 @@ int	ft_putnbr_small_sixteen(uintptr_t x)
 	return (count);
 }
 
-int	ft_putadres(uintptr_t a)
+int	ft_putadrs(uintptr_t a)
 {
 	int	count;
 
@@ -122,64 +122,32 @@ int	ft_put_u_nbr(unsigned int n)
 
 int	ft_vfprintf(const char *format, va_list ap, int done)
 {
-	int				num;
-	char			*s2;
-	char			centens;
-	unsigned int	num2;
-	uintptr_t		j;
-
 	while (*format != '\0')
 	{
 		if (*format != '%')
 			ft_putchar(*format);
-		else if (*(format + 1) == 's')
+		else
 		{
 			format++;
-			s2 = (char *)va_arg(ap, char *);
-			ft_putstr(s2);
-		}
-		else if (*(format + 1) == 'd' || *(format + 1) == 'i')
-		{
-			format++;
-			num = (int)va_arg(ap, int);
-			ft_putnbr(num);
-		}
-		else if (*(format + 1) == 'c')
-		{
-			format++;
-			centens = (char)va_arg(ap, int);
-			ft_putchar(centens);
-		}
-		else if (*(format + 1) == 'x' || *(format + 1) == 'X')
-		{
-			format++;
-			if (*format == 'x')
+			if (*format == 's')
+				ft_putstr(va_arg(ap, char *));
+			else if (*format == 'd' || *format == 'i')
+				ft_putnbr(va_arg(ap, int));
+			else if (*format == 'c')
+				ft_putchar(va_arg(ap, int));
+			else if (*format == 'x' || *format == 'X')
 			{
-				j = va_arg(ap, uintptr_t);
-				ft_putnbr_small_sixteen(num2);
+				if (*format == 'x')
+					ft_putnbr_small_sixteen(va_arg(ap, uintptr_t));
+				else
+					ft_putnbr_big_sixteen(va_arg(ap, uintptr_t));
 			}
-			else
-			{
-				j = va_arg(ap, uintptr_t);
-				ft_putnbr_big_sixteen(num2);
-			}
-		}
-		else if (*(format + 1) == 'p')
-		{
-			format++;
-			j = va_arg(ap, uintptr_t);
-			ft_putadres(j);
-		}
-		else if (*(format + 1) == 'u')
-		{
-			format++;
-			num2 = va_arg(ap, unsigned int);
-			ft_put_u_nbr(num2);
-		}
-		else if (*(format + 1) == '%')
-		{
-			format++;
-			ft_putchar('%');
+			else if (*format == 'p')
+				ft_putadrs(va_arg(ap, uintptr_t));
+			else if (*format == 'u')
+				ft_put_u_nbr(va_arg(ap, unsigned int));
+			else if (*format == '%')
+				ft_putchar('%');
 		}
 		format++;
 	}
@@ -201,27 +169,20 @@ int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-	// char	s1[5] = {"abcde"};
+	char	s1[5] = {"abcde"};
 
-	ft_put_u_nbr(-21);
-	printf("\n");
-	ft_put_u_nbr(0);
-	printf("\n");
-	ft_put_u_nbr(21);
-	printf("\n");
-	printf("%u\n", -21);
-	printf("%u\n", 4294967295);
-	// printf("---------ft_printf---------\n");
-	// ft_printf("%p\n", &s1[0]);
-	// ft_printf("%p\n", &s1[1]);
-	// ft_printf("%p\n", &s1[2]);
-	// ft_printf("%p\n", &s1[3]);
-	// ft_printf("%p\n", &s1[4]);
-	// printf("----------printf-----------\n");
-	// printf("%p\n", &s1[0]);
-	// printf("%p\n", &s1[1]);
-	// printf("%p\n", &s1[2]);
-	// printf("%p\n", &s1[3]);
-	// printf("%p\n", &s1[4]);
+
+	printf("---------ft_printf---------\n");
+	ft_printf("abcdef%s\n", s1);
+	// ft_printf("%s\n", s1);
+	// ft_printf("%s\n", s1);
+	// ft_printf("%s\n", s1);
+	// ft_printf("%s\n", s1);
+	printf("----------printf-----------\n");
+	printf("%s\n", s1);
+	printf("%s\n", s1);
+	printf("%s\n", s1);
+	printf("%s\n", s1);
+	printf("%s\n", s1);
 	return (0);
 }

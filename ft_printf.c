@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ichinoseyuuki <ichinoseyuuki@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:23:17 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/31 16:40:45 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/10/31 21:23:28 by ichinoseyuu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"ft_printf.h"
+#include<stdio.h>
 
 int	ft_vfprintf(const char *format, va_list ap, int *done)
 {
@@ -58,7 +59,9 @@ int	ft_printf(const char *format, ...)
 int main(void)
 {
 	int i;
-	i = ft_printf("%d\n", 42);
-	ft_printf("%d", i);
+	char *s = NULL;
+	//  i = ft_putstr(s);
+	i = ft_printf("%p\n",s);
+	ft_printf("%p",i);
 	return 0;
 }

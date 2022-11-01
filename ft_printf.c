@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ichinoseyuuki <ichinoseyuuki@student.42    +#+  +:+       +#+        */
+/*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:23:17 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/31 21:23:28 by ichinoseyuu      ###   ########.fr       */
+/*   Updated: 2022/11/01 15:08:39 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"ft_printf.h"
 #include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
 
 int	ft_vfprintf(const char *format, va_list ap, int *done)
 {
@@ -22,9 +24,9 @@ int	ft_vfprintf(const char *format, va_list ap, int *done)
 	else if (*format == 'c')
 		done += ft_putchar(va_arg(ap, int));
 	else if (*format == 'x')
-		done += ft_putnbr_small_sixteen(va_arg(ap, uintptr_t));
+		done += ft_putnbr_small_sixteen(va_arg(ap, unsigned int));
 	else if (*format == 'X')
-		done += ft_putnbr_big_sixteen(va_arg(ap, uintptr_t));
+		done += ft_putnbr_big_sixteen(va_arg(ap, unsigned int));
 	else if (*format == 'p')
 		done += ft_putadrs(va_arg(ap, uintptr_t));
 	else if (*format == 'u')
@@ -56,12 +58,28 @@ int	ft_printf(const char *format, ...)
 	return (count);
 }
 
-int main(void)
+int	main(void)
 {
-	int i;
-	char *s = NULL;
-	//  i = ft_putstr(s);
-	i = ft_printf("%p\n",s);
-	ft_printf("%p",i);
-	return 0;
+	int	i;
+	int	j;
+	char	*c;
+
+	c = malloc(sizeof(int) * (INT_MAX));
+
+	printf("---------ft_printf---------\n");
+
+	i = ft_printf("%c,%s,%p,%d,%i,%u,%x,%X,%%\n",'\0',"",&i,0,INT_MIN,INT_MAX,INT_MIN,UINT_MAX);
+	printf("%d\n", i);
+	// ft_printf("%s\n", s1);
+	// ft_printf("%s\n", s1);
+	// ft_printf("%s\n", s1);
+	// ft_printf("%s\n", s1);
+	printf("----------printf-----------\n");
+	j = printf("%c,%s,%p,%d,%i,%u,%x,%X,%%\n",'\0',"",&i,0,INT_MIN,INT_MAX,INT_MIN,UINT_MAX);
+	printf("%d\n", j);
+	// printf("%s\n", s1);
+	// printf("%s\n", s1);
+	// printf("%s\n", s1);
+	// printf("%s\n", s1);
+	return (0);
 }

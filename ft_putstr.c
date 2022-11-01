@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ichinoseyuuki <ichinoseyuuki@student.42    +#+  +:+       +#+        */
+/*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:30:23 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/31 21:19:23 by ichinoseyuu      ###   ########.fr       */
+/*   Updated: 2022/11/01 14:42:44 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	ft_putstr(char *s)
 
 	count = 0;
 	if (!s)
-	{	count += ft_putstr("(NULL)");
+	{
+		count += ft_putstr("(null)");
 		return (count);
 	}
 	while (*s)

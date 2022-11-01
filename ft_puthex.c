@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_puthex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ichinoseyuuki <ichinoseyuuki@student.42    +#+  +:+       +#+        */
+/*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:39:29 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/31 21:21:08 by ichinoseyuu      ###   ########.fr       */
+/*   Updated: 2022/11/01 14:41:18 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"ft_printf.h"
 
-int	ft_putnbr_big_sixteen(uintptr_t x)
+int	ft_putnbr_big_sixteen(unsigned long int x)
 {
 	unsigned int	r;
 	int				count;
@@ -29,7 +29,7 @@ int	ft_putnbr_big_sixteen(uintptr_t x)
 	return (count);
 }
 
-int	ft_putnbr_small_sixteen(uintptr_t x)
+int	ft_putnbr_small_sixteen(unsigned long int x)
 {
 	unsigned int	r;
 	int				count;
@@ -38,10 +38,10 @@ int	ft_putnbr_small_sixteen(uintptr_t x)
 	r = x % 16;
 	x = x / 16;
 	if (x > 0)
-		ft_putnbr_small_sixteen(x);
+		count += ft_putnbr_small_sixteen(x);
 	if (r >= 0 && r <= 9)
-		ft_putchar((char)r + '0');
+		count += ft_putchar((char)r + '0');
 	else if (r > 9)
-		ft_putchar('a' +(char)r - 10);
+		count += ft_putchar('a' +(char)r - 10);
 	return (count);
 }

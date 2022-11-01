@@ -6,7 +6,7 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:35:06 by yichinos          #+#    #+#             */
-/*   Updated: 2022/10/31 14:36:11 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/11/01 15:17:52 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,27 @@ int	ft_putnbr(int n)
 	count = 0;
 	if (n == INT_MIN)
 	{
-		count += ft_putchar('-');
-		count += ft_putchar('2');
+		ft_putchar('-');
+		ft_putchar('2');
 		n = 147483648;
+		count += 2;
 	}
 	if (n < 0)
 	{
-		count += ft_putchar('-');
-		n = -n;
+		ft_putchar('-');
+		count++;
+		n *= -1;
 	}
-	if (n >= 10)
+	if (n < 10)
+	{
+		ft_putchar(n + '0');
+		count++;
+	}
+	else
 	{
 		ft_putnbr(n / 10);
 		ft_putnbr(n % 10);
 	}
-	else
-		count += ft_putchar(n + '0');
 	return (count);
 }
 
@@ -53,4 +58,15 @@ int	ft_put_u_nbr(unsigned int n)
 	else
 		count += ft_putchar(n + '0');
 	return (count);
+}
+
+int main(void)
+{
+	int i;
+	int j;
+	i = 1123;
+	j = ft_putnbr(i);
+	ft_putchar('\n');
+	ft_putnbr(j);
+	return (0);
 }

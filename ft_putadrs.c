@@ -6,11 +6,12 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:41:17 by yichinos          #+#    #+#             */
-/*   Updated: 2022/11/01 14:35:32 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/11/01 18:05:25 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"ft_printf.h"
+#include<stdio.h>
 
 int	ft_putadrs(uintptr_t a)
 {

@@ -6,7 +6,7 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:28:47 by yichinos          #+#    #+#             */
-/*   Updated: 2022/11/01 14:27:30 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/11/01 18:08:38 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ int	ft_put_u_nbr(unsigned int n);
 int	ft_putnbr_big_sixteen(unsigned int long x);
 int	ft_putnbr_small_sixteen(unsigned int long x);
 int	ft_putadrs(uintptr_t a);
-int	ft_vfprintf(const char *format, va_list ap, int done);
+int	ft_vfprintf(const char *format, va_list ap, int *done);
 
 #endif

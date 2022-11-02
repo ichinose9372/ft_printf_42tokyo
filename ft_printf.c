@@ -6,14 +6,11 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:23:17 by yichinos          #+#    #+#             */
-/*   Updated: 2022/11/02 14:47:10 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:39:33 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"ft_printf.h"
-#include<stdio.h>
-#include<stdlib.h>
-#include<limits.h>
 
 int	ft_vfprintf(const char *format, va_list ap)
 {

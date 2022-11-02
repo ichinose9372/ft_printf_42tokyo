@@ -6,7 +6,7 @@
 /*   By: yichinos <yichinos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:23:17 by yichinos          #+#    #+#             */
-/*   Updated: 2022/11/02 12:06:06 by yichinos         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:47:10 by yichinos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ int	ft_printf(const char *format, ...)
 		format++;
 	}
 	va_end(ap);
+	if (count >= INT_MAX)
+		return (-1);
 	return (count);
 }
